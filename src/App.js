@@ -1,25 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+
+import React from 'react';
+import CreateAccount from './Components/CreateAccount';
+import DeleteAccount from './Components/DeleteAccount';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="min-h-screen bg-gradient-to-r from-green-200 to-blue-200 p-8">
+      <div className="grid md:grid-cols-2 gap-8">
+        <CreateAccount />
+        <DeleteAccount />
+      </div>
     </div>
   );
 }
 
 export default App;
+
