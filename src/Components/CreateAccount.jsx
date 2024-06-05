@@ -7,6 +7,7 @@ function CreateAccount() {
   const [experience, setExperience] = useState('');
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordStrength, setPasswordStrength] = useState('');
 
   const validateForm = () => {
     const newErrors = {};
@@ -35,7 +36,25 @@ function CreateAccount() {
     e.preventDefault();
 
     if (validateForm()) {
+      // Proceed with form submission (e.g., send data to server)
       console.log('Form submitted successfully');
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+    evaluatePasswordStrength(newPassword);
+  };
+
+  const evaluatePasswordStrength = (password) => {
+    // This is just a simple example and we can add other factors such as combinations etc...
+    if (password.length < 6) {
+      setPasswordStrength('Weak');
+    } else if (password.length < 10) {
+      setPasswordStrength('Medium');
+    } else {
+      setPasswordStrength('Strong');
     }
   };
 
@@ -64,7 +83,7 @@ function CreateAccount() {
             placeholder="Password"
             className="w-full p-2 border border-gray-300 rounded mt-1"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
           />
           <span className="absolute right-3 top-10 text-gray-500 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
             {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -73,6 +92,11 @@ function CreateAccount() {
           {errors.password && (
             <p className="text-red-600 text-sm">{errors.password}</p>
           )}
+          <div className="mt-2">
+            <p className={`text-sm ${passwordStrength === 'Weak' ? 'text-red-600' : passwordStrength === 'Medium' ? 'text-yellow-500' : 'text-green-500'}`}>
+              Password Strength: {passwordStrength}
+            </p>
+          </div>
         </div>
         <div className="mb-4">
           <label className="block text-gray-700">Year of Experience</label>
@@ -91,8 +115,8 @@ function CreateAccount() {
           )}
         </div>
         <div className="mb-4 flex items-center">
-          <input type="checkbox" className="mr-2" />
-          <label className="text-gray-700">Remember Me</label>
+          <input type="checkbox" className="mr-2" id="rememberMe" />
+          <label htmlFor="rememberMe" className="text-gray-700 cursor-pointer">Remember Me</label>
         </div>
         <button
           type="submit"
